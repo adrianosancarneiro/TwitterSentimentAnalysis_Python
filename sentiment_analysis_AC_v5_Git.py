@@ -83,7 +83,7 @@ ENCODER_MODEL = "encoder.pkl"
 
 print("Reading the data")
 ### Read the dataset
-dataset_path = "/Users/adrianocarneiro/Google Drive/_20170918_Graduacao_BYU/_202001_Winter_2020/CS_450_ML/Projects/W2020_CS450_ML/Final_Project/Twitter_Sentimental_Analysis_Git_Project_v3/data/training.1600000.processed.noemoticon.csv"
+dataset_path = "/data/training.1600000.processed.noemoticon.csv"
 df = pd.read_csv(dataset_path, encoding=DATASET_ENCODING , names=DATASET_COLUMNS)
 ### --- ###
 
@@ -102,7 +102,7 @@ def decode_sentiment(code):
 ### --- ###
 
 print("Pre-processing the data")
-### Pre-processing the data!
+### Pre-processing the data
 # The process of converting data to something a computer can understand is referred to as pre-processing.
 # One of the major forms of pre-processing is to filter out useless data.
 # stopwords: In natural language processing, useless words (data), are referred to as stop words(such as “the”, “a”, “an”, “in”)
@@ -239,7 +239,7 @@ from keras.models import load_model
 #del model  # deletes the existing model
 # returns a compiled model
 # identical to the previous one
-model = load_model('/Users/adrianocarneiro/Google Drive/_20170918_Graduacao_BYU/_202001_Winter_2020/CS_450_ML/Projects/W2020_CS450_ML/Final_Project/Twitter_Sentimental_Analysis_Git_Project_v3/twitter_BOT_V3')
+model = load_model('/twitter_BOT_V3')
 ### --- ###
 
 # Changing positiveness score to a label score
@@ -301,10 +301,10 @@ import pandas as pd
 
 print("Setting the variable")
 # Credentials to access the Twitter API 
-consumer_key = '5VRb3V2d31stqgAeEMZjoGozC'
-consumer_secret = 'HPlOOacZHCEc80TREwlHPqHqDtYG9QfmsDddkiNzJpYNrC4l00'
-access_token = '322916754-kkzhIhKkq6Fne7RnEcxHsFMtanXDesU99olhuKwu'
-access_token_secret = 'k5juTBfnMRgFm2ZuuDpJQQ65xntlBFl6jwm2iGJrcibVN'
+consumer_key = ''
+consumer_secret = ''
+access_token = ''
+access_token_secret = ''
 
 app = Flask(__name__)
 
@@ -328,11 +328,11 @@ def Welcome():
     return 'Welcome to the Twitter sentiment analysis API'
 
 # API available method to get the tweets and its geolocation
-@app.route('/GetTweetsSentiment/<string:searchedTerm>/<int:numberTweets>', methods=['GET'])
-def GetTweetsSentiment(searchedTerm, numberTweets):
+@app.route('/GetTweetsSentiment/<string:hashtag>/<int:numberTweets>', methods=['GET'])
+def GetTweetsSentiment(hashtag, numberTweets):
     try:
         sentiment_analysis_dataset = pd.DataFrame()
-        tweet_returned_list = GetTweets(searchedTerm, numberTweets)
+        tweet_returned_list = GetTweets(hashtag, numberTweets)
         geolocator = Nominatim()
 
         # df.text = df.text.apply(lambda x: preprocess(x))
@@ -370,7 +370,7 @@ if __name__ == '__main__':
     print("API is Running...")
     app.run(debug=True, use_reloader=False, threaded=False)
 
-    # r = GetTweetsSentiment("Trump", 10)
+    # r = GetTweetsSentiment("coronavirus", 10)
 
     # x = 1123
 
